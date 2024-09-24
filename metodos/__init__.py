@@ -1,1 +1,1 @@
-from .runge_kutta import rk4
+from runge_kutta import rk4

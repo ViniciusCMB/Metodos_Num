@@ -8,9 +8,8 @@ Este repositório contém métodos numéricos para a solução de equações dif
 
 ## Estrutura do Repositório
 
-- `ntb/`: Notebooks dos métodos.
+- `src/`: Códigos de apoio ao desenvolvimento.
 - `docs/`: Documentação e imagens.
-- `apoio/`: Códigos de apoio ao desenvolvimento.
 
 ## Métodos Implementados
 
@@ -36,7 +35,7 @@ Este repositório contém métodos numéricos para a solução de equações dif
    ```bash
    pip install -r requirements.txt
    ```
-4. Execute os notebooks:
+4. Execute os arquivos de exemplo:
    ```bash
-   trabalho1.ipynb
+   python src/1.py
    ```

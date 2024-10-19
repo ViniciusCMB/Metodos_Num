@@ -25,7 +25,7 @@ Este repositório contém métodos numéricos para a solução de equações dif
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/metodos_numericos.git
+   git clone https://github.com/ViniciusCMB/Metodos_Num.git
    ```
 2. Navegue até o diretório do projeto:
    ```bash

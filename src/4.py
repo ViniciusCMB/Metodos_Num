@@ -11,33 +11,38 @@ CE = 1.0
 # Parâmetros de discretização
 Nx = 50  # número de pontos no espaço
 Nt = 1000  # número de pontos no tempo
-dx = Lx / (Nx - 1)
-dt = T / Nt
 
-# Verificar a restrição do passo de tempo
-if dt > 1 / (2 * alpha * (dx**2) + u * dx):
-    raise ValueError(
-        "O passo de tempo não satisfaz a condição de estabilidade.")
+def func_C(Lx, Nx, T, Nt, alpha, u, CE):
+    dx = Lx / (Nx - 1)
+    dt = T / Nt
 
-# Inicializar a matriz de concentração
-C = np.zeros((Nt, Nx))
+    # Verificar a restrição do passo de tempo
+    if dt > 1 / (2 * alpha / dx**2 + u / dx):
+        raise ValueError("O passo de tempo não satisfaz a condição de estabilidade.")
 
-# Condição inicial
-C[0, :] = 0.0
+    # Inicializar a matriz de concentração
+    C = np.zeros((Nt, Nx))
 
-# Condição de contorno
-C[:, 0] = CE
+    # Condição inicial
+    C[0, :] = 0.0
 
-# Loop de tempo
-for n in range(0, Nt-1):
-    for i in range(1, Nx-1):
-        C[n+1, i] = (C[n, i] + dt * (-u * (C[n, i] - C[n, i-1]) / dx +
-                                     alpha * (C[n, i+1] - 2 * C[n, i] + C[n, i-1]) / dx**2))
-    # Condição de contorno Neumann no final do domínio
-    C[n+1, -1] = C[n+1, -2]
+    # Condição de contorno
+    C[:, 0] = CE
 
+    # Loop de tempo
+    for n in range(0, Nt-1):
+        for i in range(1, Nx-1):
+            C[n+1, i] = (C[n, i] + dt * (-u * (C[n, i] - C[n, i-1]) / dx +
+                                        alpha * (C[n, i+1] - 2 * C[n, i] + C[n, i-1]) / dx**2))
+        # Condição de contorno Neumann no final do domínio
+        C[n+1, -1] = C[n+1, -2]
+
+    x = np.linspace(0, Lx, Nx)
+
+    return C, x
+
+C, x = func_C(Lx, Nx, T, Nt, alpha, u, CE)
 # Plotar o resultado
-x = np.linspace(0, Lx, Nx)
 plt.plot(x, C[-1, :], label=f't={T}')
 plt.xlabel('x')
 plt.ylabel('C')
